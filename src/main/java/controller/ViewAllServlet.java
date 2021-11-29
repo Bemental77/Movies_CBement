@@ -1,5 +1,6 @@
 package controller;
 
+import comparator.TitleComparator;
 import model.Movie;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -10,6 +11,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 @WebServlet(name = "ViewAllServlet", urlPatterns = "/ViewAll")
@@ -25,6 +27,12 @@ public class ViewAllServlet extends HttpServlet {
         //todo fetch the information and use it to populate the model
         try {
             final List<Movie> movies = WorkbookUtility.retrieveMovieFromWorkbook(inputFile);
+
+            String sortType = request.getParameter("sortType");
+
+            if(null != sortType && sortType.equals("title")){
+                Collections.sort(movies, new TitleComparator());
+            }
 
             //todo attach the model to the request
             request.setAttribute("movies", movies);

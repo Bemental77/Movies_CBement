@@ -4,6 +4,8 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">View All<b class="caret"></b></a>
         <ul class="dropdown-menu">
             <li><a href="ViewAll">Movie List</a> </li>
+            <li><a href="ViewAll?sortType=title">Movie List by Title</a> </li>
         </ul>
     </li>
+    <li><a href="search.jsp">Search</a> </li>
 </ul>
