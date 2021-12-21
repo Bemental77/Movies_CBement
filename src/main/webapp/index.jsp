@@ -15,7 +15,7 @@
     <%@include file="includes/navigation.jsp"%>
 
     <div class="container">
-        <p>This website pulls information about movies from an excel spreadsheet and displays it.</p>
+        <p>This website creates a database and stores movies and displays it.</p>
     </div>
     <%@include file="includes/footer.jsp"%>
 </div>

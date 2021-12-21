@@ -1,11 +1,9 @@
 package controller;
 
-import comparator.TitleComparator;
 import dao.MovieDao;
 import dao.MovieDaoException;
 import dao.MovieDaoImpl;
 import model.Movie;
-
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import utility.WorkbookUtility;
 
@@ -14,45 +12,42 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@WebServlet(name = "ViewAllServlet", urlPatterns = "/ViewAll")
-public class ViewAllServlet extends HttpServlet {
+@WebServlet(name = "SearchServlet", value = "/Search")
+public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String target = "/view-all.jsp";
-        //todo get access to our spreadsheet
+        // get access to spreadsheet
        // final String filePath = getServletContext().getRealPath(WorkbookUtility.INPUT_FILE);
        // final File inputFile = new File(filePath);
-
-        //todo fetch the information and use it to populate the model
+        // fetch list of people
         try {
            // final List<Movie> movies = WorkbookUtility.retrieveMovieFromWorkbook(inputFile);
 
             final MovieDao movieDao = new MovieDaoImpl();
             final List<Movie> movies = movieDao.retrieveMovies();
 
-            String sortType = request.getParameter("sortType");
+            String filterString = request.getParameter("title");
 
-            if(null != sortType && sortType.equals("title")){
-                Collections.sort(movies, new TitleComparator());
-            }
+            // filter the list
+            final List<Movie> filtered = movies.stream().filter( (Movie m) -> m.getTitle().equalsIgnoreCase(filterString)).collect(Collectors.toList());
 
-            //todo attach the model to the request
-            request.setAttribute("movies", movies);
+            // attach the list(model) to the request
+            request.setAttribute("movies", filtered);
+
 
         } catch (MovieDaoException e) {
             e.printStackTrace();
         }
-        //todo forward the request to the view.
-        getServletContext().getRequestDispatcher(target).forward(request, response);
 
+        // forward the request(to the view)
+        getServletContext().getRequestDispatcher("/view-all.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+        doGet(request, response);
     }
 }

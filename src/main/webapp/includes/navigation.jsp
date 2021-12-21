@@ -7,5 +7,7 @@
             <li><a href="ViewAll?sortType=title">Movie List by Title</a> </li>
         </ul>
     </li>
-    <li><a href="search.jsp">Search</a> </li>
+    <li><a href="search.jsp">Search</a></li>
+    <li><a href="populate.jsp">Populate the Database</a> </li>
+    <li><a href="add-movie.jsp">Add a New Movie to the Database</a> </li>
 </ul>
