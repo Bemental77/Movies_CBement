@@ -33,9 +33,11 @@
 
             <label for ="IMDB">IMDB Link:</label>
             <input type="text" name="IMDB" id="IMDB">
+                <p>Please include "https://www." for proper operation.</p>
 
             <label for ="thumbnail">Thumbnail:</label>
             <input type="text" name="thumbnail" id="thumnail">
+                <p>This is a web address for a thumbnail, please include "https://wwww."</p>
 
             <input type="submit">
         </form>
